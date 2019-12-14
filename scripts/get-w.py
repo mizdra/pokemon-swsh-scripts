@@ -4,7 +4,7 @@ import serial
 from time import sleep
 from datetime import date
 
-from controller import Controller
+from lib.controller import Controller
 
 # 1. 日付を2000/1/1に合わせる
 # 2. W回収済み & 柱のある祠の前へ移動
