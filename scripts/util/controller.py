@@ -3,6 +3,7 @@ import serial
 from time import sleep
 from datetime import timedelta
 import calendar
+from getch import getch, pause
 
 class Controller:
     def __init__(self, ser, date, back_game_duration=0.9, back_home_duration=0.9):
@@ -123,3 +124,76 @@ class Controller:
         
         # 現在の日付と時刻からホームに戻る
         self.back_home()
+
+    def manual(self):
+        print('マニュアルモードに移行しました. キーボードでコントローラを操作できます. 終了する場合は^Cを押して下さい.')
+        print('awds=LX, xfvc=HAT, ko;l=Button_YXAB, nj,m=RX, q=L, 1=ZL, p=R, -=ZR, g=SELECT, h=START, b=CAPTURE, <space>=HOME')
+        while True:
+            key = getch()
+
+            button_duration = 0.05
+            home_duration = 0.3
+            stick_duration = 0.2
+            hat_duration = 0.05
+
+            if key == '\x03':
+                raise KeyboardInterrupt()
+
+            if key == 'a':
+                self.send('LX MIN', stick_duration)
+            if key == 'w':
+                self.send('LY MIN', stick_duration)
+            if key == 'd':
+                self.send('LX MAX', stick_duration)
+            if key == 's':
+                self.send('LY MAX', stick_duration)
+
+            if key == 'x':
+                self.send('HAT LEFT', hat_duration)
+            if key == 'f':
+                self.send('HAT TOP', hat_duration)
+            if key == 'v':
+                self.send('HAT RIGHT', hat_duration)
+            if key == 'c':
+                self.send('HAT BOTTOM', hat_duration)
+
+            if key == 'k':
+                self.send('Button Y', button_duration)
+            if key == 'o':
+                self.send('Button X', button_duration)
+            if key == ';':
+                self.send('Button A', button_duration)
+            if key == 'l':
+                self.send('Button B', button_duration)
+
+            if key == 'n':
+                self.send('RX MIN', stick_duration)
+            if key == 'j':
+                self.send('RY MIN', stick_duration)
+            if key == ',':
+                self.send('RX MAX', stick_duration)
+            if key == 'm':
+                self.send('RY MAX', stick_duration)
+            
+            if key == 'q':
+                self.send('Button L', button_duration)
+            if key == '1':
+                self.send('Button ZL', button_duration)
+            
+            if key == 'p':
+                self.send('Button R', button_duration)
+            if key == '-':
+                self.send('Button ZR', button_duration)
+            
+            if key == 'g':
+                self.send('Button SELECT', button_duration)
+            if key == 'h':
+                self.send('Button START', button_duration)
+            
+            if key == 'b':
+                self.send('Button CAPTURE', button_duration)
+            if key == ' ':
+                self.send('Button HOME', home_duration)
+
+            sleep(0.05)
+
