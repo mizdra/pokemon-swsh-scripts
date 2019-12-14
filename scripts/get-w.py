@@ -22,16 +22,16 @@ args = parser.parse_args()
 ser = serial.Serial(args.port, 9600)
 controller = Controller(ser, date(2000, 1, 1))
 
-sleep(1)
-
-# コントローラの接続
-controller.register()
-
-# ゲームに戻る
-controller.back_game()
-sleep(1) # ホームから直接フィールドの画面に戻るとラグが発生するので, 多めにsleepする
-
 try:
+    sleep(1)
+
+    # コントローラの接続
+    controller.register()
+
+    # ゲームに戻る
+    controller.back_game()
+    sleep(1) # ホームから直接フィールドの画面に戻るとラグが発生するので, 多めにsleepする
+
     while True:
         # みんなで対戦を開く
         controller.send('Button A', 0.1)
@@ -60,5 +60,10 @@ try:
         controller.send('Button A', 0.1)
         sleep(0.3)
 except KeyboardInterrupt:
-    controller.send('RELEASE', 0)
-    ser.close()
+    try:
+        # 1回 ^C したらマニュアルモードへ移行
+        controller.send('RELEASE', 0)
+        controller.manual()
+    except KeyboardInterrupt:
+        # 2回 ^C したら終了
+        ser.close()
