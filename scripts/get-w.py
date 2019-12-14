@@ -11,10 +11,6 @@ from lib.controller import Controller
 # 3. ホームに戻り, コントローラ変続画面を開く
 # 4. スクリプトを実行する
 
-# デバッグ情報:
-# 2000/7/31 は天候の関係で大きめのラグが発生する
-# ホーム画面で軽く時間を置いてからゲームに戻るとラグが発生しやすい
-
 parser = argparse.ArgumentParser()
 parser.add_argument('port')
 args = parser.parse_args()
