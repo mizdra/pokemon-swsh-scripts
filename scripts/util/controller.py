@@ -17,22 +17,31 @@ class Controller:
         sleep(duration)
         self.ser.write(b'RELEASE\r\n')
     
+    # コントローラを登録する
+    # 事前条件: コントローラ接続画面を開いている
+    # 事後条件: ホーム画面を開いている
     def register(self):
         self.send('Button L', 0.05)
         self.send('Button R', 0.05)
         sleep(1)
         self.back_home()
 
+    # ゲームに戻る
+    # 事前条件: ホーム画面を開いている
+    # 事後条件: ゲーム画面を開いている
     def back_game(self, back_game_duration=None):
         self.send('Button HOME', 0.3) # ホームボタンは他のボタンと違って多めにdurationを取る必要がある
         sleep(back_game_duration if back_game_duration != None else self.back_game_duration)
 
+    # ホームに戻る
+    # 事前条件: ゲーム画面を開いている
+    # 事後条件: ホーム画面を開いている
     def back_home(self, back_home_duration=None):
         self.send('Button HOME', 0.3) # ホームボタンは他のボタンと違って多めにdurationを取る必要がある
         sleep(back_home_duration if back_home_duration != None else self.back_home_duration)
 
     # 日付を進める
-    # 事前条件: ホーム画面を開いている & 日付がXXXX/1/1 & ペナルティ解除済み
+    # 事前条件: ホーム画面を開いている
     # 事後条件: ホーム画面を開いている
     def increment_date(self):
         # 設定を開く
