@@ -7,9 +7,14 @@ from datetime import date
 from lib.controller import Controller
 
 # 1. 日付を2000/1/1に合わせる
-# 2. W回収済み & 柱のある祠の前へ移動
-# 3. ホームに戻り, コントローラ変続画面を開く
+# 2. W回収済み & 柱のある巣の前へ移動
+# 3. ホームに戻り, コントローラ接続画面を開く
 # 4. スクリプトを実行する
+
+# ## スクリプトの書式
+# ```
+# $ ./scripts/get-w.py /dev/tty.usbserial*
+# ```
 
 parser = argparse.ArgumentParser()
 parser.add_argument('port')
